@@ -9,7 +9,7 @@ const QuestionList = ({ questions, activeTab, onSelect }) => {
         Challenges
       </p>
 
-        
+
       {questions.map((q, idx) => (
         <button
           key={q.id}
@@ -27,6 +27,7 @@ const QuestionList = ({ questions, activeTab, onSelect }) => {
             />
             <span className="font-medium text-sm">{q.title}</span>
           </div>
+          
           {activeTab === idx && <ChevronRight size={14} className="text-indigo-500" />}
         </button>
       ))}

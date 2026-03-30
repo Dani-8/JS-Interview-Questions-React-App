@@ -88,10 +88,33 @@ const questions = [
   {
     id: 7,
     title: "Remove Falsy",
-    type: "static",
-    placeholder: "Filters [0, false, '', null...]",
-    code: `(arr) => arr.filter(Boolean)`,
-    fn: () => JSON.stringify([0, 1, false, 2, '', 3, null, undefined, NaN, 'hello'].filter(Boolean))
+    type: "array",
+    placeholder: "0, 1, false, '', 2, null, 3",
+    code: ` (input) => {
+      if (!input) return "[]";
+      const arr = input.split(',').map(item => {
+        const trimmed = item.trim();
+        if (trimmed === 'false') return false;
+        if (trimmed === 'null') return null;
+        if (trimmed === 'undefined') return undefined;
+        if (trimmed === '') return '';
+        return isNaN(trimmed) ? trimmed : Number(trimmed);
+      });
+      return JSON.stringify(arr.filter(Boolean));
+    }
+  }`,
+    fn: (input) => {
+      if (!input) return "[]";
+      const arr = input.split(',').map(item => {
+        const trimmed = item.trim();
+        if (trimmed === 'false') return false;
+        if (trimmed === 'null') return null;
+        if (trimmed === 'undefined') return undefined;
+        if (trimmed === '') return '';
+        return isNaN(trimmed) ? trimmed : Number(trimmed);
+      });
+      return JSON.stringify(arr.filter(Boolean));
+    }
   },
   {
     id: 8,
@@ -122,11 +145,13 @@ const questions = [
 }`,
     fn: (input) => {
       const arr = input.split(',').map(Number).filter(n => !isNaN(n)).sort((a, b) => a - b);
-      if (arr.length < 2) return "Need at least 2 numbers";
-      let missing = [];
+      if (arr.length < 2) return "Need at least 2 numbers"
+      let missing = []
+
       for (let i = arr[0]; i <= arr[arr.length - 1]; i++) {
         if (!arr.includes(i)) missing.push(i);
       }
+
       return missing.length ? missing.join(', ') : "None missing";
     }
   },
@@ -147,9 +172,8 @@ const App = () => {
 
 
 
-  // Calculate result using useEffect instead of useMemo
   useEffect(() => {
-    if (!inputVal && currentQ.type !== 'static') {
+    if (!inputVal) {
       setResult("");
       return;
     }
@@ -160,7 +184,7 @@ const App = () => {
     } catch (err) {
       setResult("Error");
     }
-  }, [inputVal, activeTab]);
+  }, [inputVal, activeTab])
 
 
   const handleQuestionSelect = (idx) => {
@@ -195,6 +219,9 @@ const App = () => {
           </button>
         </header>
 
+        {/* ======================================== */}
+        {/* ======================================== */}
+        {/* ======================================== */}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4">
@@ -213,15 +240,9 @@ const App = () => {
               result={result}
               showCode={showCode}
             />
-
-            <div className="bg-slate-900/30 border border-slate-800/50 p-4 rounded-2xl flex items-center justify-between">
-              <p className="text-xs text-slate-500">React State Management • Functional Programming • ES6+</p>
-              <div className="flex gap-1">
-                {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-slate-700" />)}
-              </div>
-            </div>
           </div>
         </div>
+
       </div>
     </div>
   );
