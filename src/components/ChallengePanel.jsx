@@ -1,6 +1,7 @@
 import React from 'react';
 import { Code2 } from 'lucide-react';
 
+
 const ChallengePanel = ({ 
   currentQ, 
   inputVal, 
@@ -8,6 +9,7 @@ const ChallengePanel = ({
   result, 
   showCode 
 }) => {
+
   return (
     <div className="bg-slate-900/50 rounded-3xl border border-slate-800 p-6 md:p-8 backdrop-blur-sm">
       <div className="flex items-center justify-between mb-8">

@@ -3,6 +3,9 @@ import { Zap, Terminal } from 'lucide-react';
 import QuestionList from './components/QuestionList';
 import ChallengePanel from './components/ChallengePanel';
 
+// -------------------------------------------------------------
+// -------------------------------------------------------------
+
 const questions = [
   {
     id: 1,
@@ -130,23 +133,29 @@ const questions = [
 ];
 
 
-const App = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  const [inputVal, setInputVal] = useState("");
-  const [showCode, setShowCode] = useState(false);
+// -------------------------------------------------------------
+// -------------------------------------------------------------
 
-  const currentQ = questions[activeTab];
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState(0)
+  const [inputVal, setInputVal] = useState("")
+  const [showCode, setShowCode] = useState(false)
+
+  const currentQ = questions[activeTab]
 
   const result = useMemo(() => {
-    if (!inputVal && currentQ.type !== 'static') return "";
-    return currentQ.fn(inputVal);
-  }, [inputVal, activeTab]);
+    if (!inputVal && currentQ.type !== 'static') return ""
+    return currentQ.fn(inputVal)
+  }, [inputVal, activeTab])
 
   const handleQuestionSelect = (idx) => {
     setActiveTab(idx);
     setInputVal("");
   };
 
+
+  
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans p-4 md:p-8">
       <div className="max-w-6xl mx-auto">

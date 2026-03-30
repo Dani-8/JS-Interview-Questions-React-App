@@ -1,12 +1,15 @@
 import React from 'react';
 import { Code2, ChevronRight } from 'lucide-react';
 
+
 const QuestionList = ({ questions, activeTab, onSelect }) => {
   return (
     <nav className="flex flex-col gap-2">
       <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2 px-2">
         Challenges
       </p>
+
+      
       {questions.map((q, idx) => (
         <button
           key={q.id}
