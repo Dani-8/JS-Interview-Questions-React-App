@@ -12,15 +12,17 @@ const ChallengePanel = ({
 
   return (
     <div className="bg-slate-900/50 rounded-3xl border border-slate-800 p-6 md:p-8 backdrop-blur-sm">
+
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-xl font-semibold text-white flex items-center gap-2">
           <Code2 className="text-indigo-400" size={20} />
-          {currentQ.title}
+          {currentQ.title}  
         </h2>
         <span className="text-xs font-mono bg-slate-800 px-2 py-1 rounded text-slate-400 uppercase tracking-tighter">
           {currentQ.type}
         </span>
       </div>
+
 
       {showCode ? (
         <div className="bg-slate-950 rounded-2xl border border-slate-800 p-4 overflow-x-auto">
@@ -33,12 +35,13 @@ const ChallengePanel = ({
           {currentQ.type !== 'static' && (
             <div className="space-y-2">
               <label className="text-xs text-slate-500 font-medium ml-1">TEST INPUT</label>
+
               <input
                 type="text"
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 placeholder={currentQ.placeholder}
-                className="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-indigo-100 placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+                className="w-full bg-slate-950 mt-1 border border-slate-800 rounded-2xl p-4 text-indigo-100 placeholder:text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
               />
             </div>
           )}

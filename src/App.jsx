@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Zap, Terminal } from 'lucide-react';
 import QuestionList from './components/QuestionList';
 import ChallengePanel from './components/ChallengePanel';
@@ -141,13 +141,27 @@ const App = () => {
   const [activeTab, setActiveTab] = useState(0)
   const [inputVal, setInputVal] = useState("")
   const [showCode, setShowCode] = useState(false)
+  const [result, setResult] = useState("")
 
   const currentQ = questions[activeTab]
 
-  const result = useMemo(() => {
-    if (!inputVal && currentQ.type !== 'static') return ""
-    return currentQ.fn(inputVal)
-  }, [inputVal, activeTab])
+
+
+  // Calculate result using useEffect instead of useMemo
+  useEffect(() => {
+    if (!inputVal && currentQ.type !== 'static') {
+      setResult("");
+      return;
+    }
+
+    try {
+      const output = currentQ.fn(inputVal);
+      setResult(output);
+    } catch (err) {
+      setResult("Error");
+    }
+  }, [inputVal, activeTab]);
+
 
   const handleQuestionSelect = (idx) => {
     setActiveTab(idx);
@@ -155,20 +169,22 @@ const App = () => {
   };
 
 
-  
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
+
         <header className="flex items-center justify-between mb-12">
           <div className="flex items-center gap-3">
             <div className="bg-indigo-600 p-2 rounded-lg shadow-lg shadow-indigo-500/20">
               <Zap className="text-white" fill="white" />
             </div>
+
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white">JS Logic Pro</h1>
-              <p className="text-slate-400 text-sm">Interactive Interview Dashboard</p>
+              <h1 className="text-2xl font-bold tracking-tight text-slate-100">Interactive Interview Dashboard</h1>
             </div>
           </div>
+
           <button
             onClick={() => setShowCode(!showCode)}
             className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${showCode ? "bg-indigo-500 border-indigo-400 text-white" : "border-slate-800 text-slate-400 hover:border-slate-600"
@@ -178,6 +194,7 @@ const App = () => {
             <span className="text-sm font-medium">{showCode ? "Hide Logic" : "View Logic"}</span>
           </button>
         </header>
+
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4">

@@ -9,7 +9,7 @@ const QuestionList = ({ questions, activeTab, onSelect }) => {
         Challenges
       </p>
 
-      
+        
       {questions.map((q, idx) => (
         <button
           key={q.id}
